@@ -19,6 +19,9 @@ export default class User extends BaseModel {
   @column()
   public role_id: number
 
+  @column()
+  public active: boolean
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -33,7 +36,8 @@ export default class User extends BaseModel {
   }
   
   @hasOne(() => Role, {
-    foreignKey: 'role_id',
+    localKey:'role_id',
+    foreignKey: 'id',
   })
   public role: HasOne<typeof Role>
 }

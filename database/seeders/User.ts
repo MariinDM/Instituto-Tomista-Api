@@ -29,18 +29,19 @@ export default class extends BaseSeeder {
       {
         email: 'docente@gmail.com',
         password: '1234567890',
-        role_id: 1,   
+        role_id: 2,   
       },
       {
         email: 'alumno1@gmail.com',
         password: '1234567890',
-        role_id: 1,   
+        role_id: 3,   
       },
       {
         email: 'alumno2@gmail.com',
         password: '1234567890',
-        role_id: 1,   
-      },
+        role_id: 3
+      }
     ])
+
   }
 }

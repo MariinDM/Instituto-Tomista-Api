@@ -26,4 +26,15 @@ Route.get('/', async () => {
 
 Route.group(() => {
   Route.resource('roles', 'RolesController.ts')
+  Route.resource('users', 'UsersController.ts')
+
+
+  // Route.post('login','AuthController.singIn')
+
+}).middleware('auth').prefix('api/v1')
+
+Route.group(() => {
+
+  Route.post('login','AuthController.singIn')
+
 }).prefix('api/v1')

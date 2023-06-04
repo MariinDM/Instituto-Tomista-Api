@@ -6,7 +6,9 @@ export default class RolesController {
     
     public async index({ response }: HttpContextContract) {
 
-        const roles = await Role.query().orderBy('id', 'desc').exec()
+        const roles = await Role.all()
+
+        console.log(roles.find(n => n.id == 4))
 
         return response.ok({ message: 'Ok', roles })
     }
