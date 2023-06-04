@@ -8,14 +8,14 @@ export default class RolesController {
 
         const roles = await Role.all()
 
-        console.log(roles.find(n => n.id == 4))
+        // console.log(roles.find(n => n.id == 4))
 
         return response.ok({ message: 'Ok', roles })
     }
 
     public async show({ params, response }: HttpContextContract) {
 
-        const role = await Role.query().where('id', params.id).orderBy('id', 'desc').exec()
+        const role = await Role.query().where('id', params.id).orderBy('id', 'desc')
 
         return response.ok({ message: 'Ok', role })
     }
@@ -25,7 +25,7 @@ export default class RolesController {
         try {
             var vali = await request.validate(RoleValidator)
         } catch (error) {
-            return response.badRequest({ error: error.messages })
+            return response.badRequest({ error: error })
         }
 
         await Role.create(vali)
@@ -48,7 +48,7 @@ export default class RolesController {
         } catch (error) {
             console.error(error)
 
-            return response.badRequest({ error: error.messages })
+            return response.badRequest({ error: error })
         }
 
 
@@ -67,7 +67,7 @@ export default class RolesController {
         } catch (error) {
 
             console.error(error)
-            return response.badRequest({ error: error.messages })
+            return response.badRequest({ error: error })
 
         }
 
