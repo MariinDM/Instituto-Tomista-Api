@@ -1,7 +1,7 @@
 import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class UserValidator {
+export default class SectionValidator {
   constructor(protected ctx: HttpContextContract) { }
 
   /*
@@ -24,43 +24,9 @@ export default class UserValidator {
    *    ```
    */
   public schema = schema.create({
-    email: schema.string({}, [
-      rules.unique({ table: 'users', column: 'email' }),
-      rules.required()
-    ]),
-    password: schema.string({}, [
-      rules.required()
-    ]),
-    role_id: schema.number([
-      rules.required()
-    ]),
-    // USER PROFILE
-    name: schema.string([
-      rules.required()
-    ]),
-    last_name: schema.string([
-      rules.required()
-    ]),
-    street: schema.string([
-      rules.required()
-    ]),
-    number: schema.string([
-      rules.required()
-    ]),
-    suburb: schema.string([
-      rules.required()
-    ]),
-    city: schema.string([
-      rules.required()
-    ]),
-    state: schema.string([
-      rules.required()
-    ]),
-    zip_code: schema.string([
-      rules.required()
-    ]),
-    phone: schema.string([
-      rules.required()
+    name: schema.string({}, [
+      rules.unique({ table: 'secctions', column: 'name' }),
+      rules.required(),
     ]),
   })
 
@@ -77,6 +43,6 @@ export default class UserValidator {
    */
   public messages: CustomMessages = {
     required: 'The {{ field }} is required',
-    'email.unique': 'El correo ya existe'
+    'name.unique': 'Nombre de Sección Invalido'
   }
 }

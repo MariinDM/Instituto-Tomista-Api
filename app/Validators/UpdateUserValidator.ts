@@ -1,7 +1,7 @@
 import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class UserValidator {
+export default class UpdateUserValidator {
   constructor(protected ctx: HttpContextContract) { }
 
   /*
@@ -24,13 +24,13 @@ export default class UserValidator {
    *    ```
    */
   public schema = schema.create({
-    email: schema.string({}, [
-      rules.unique({ table: 'users', column: 'email' }),
-      rules.required()
-    ]),
-    password: schema.string({}, [
-      rules.required()
-    ]),
+    // email: schema.string({}, [
+    //   rules.unique({ table: 'users', column: 'email' }),
+    //   rules.required()
+    // ]),
+    // password: schema.string({}, [
+    //   rules.required()
+    // ]),
     role_id: schema.number([
       rules.required()
     ]),
@@ -77,6 +77,5 @@ export default class UserValidator {
    */
   public messages: CustomMessages = {
     required: 'The {{ field }} is required',
-    'email.unique': 'El correo ya existe'
   }
 }

@@ -1,5 +1,9 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
+import Role from 'App/Models/Role'
 import User from 'App/Models/User'
+import UserProfile from 'App/Models/UserProfile'
+import UpdateUserValidator from 'App/Validators/UpdateUserValidator'
 import UserValidator from 'App/Validators/UserValidator'
 
 export default class UsersController {
@@ -9,6 +13,7 @@ export default class UsersController {
     const users = await User.query()
       .orderBy('id', 'desc')
       .preload('role')
+      .preload('profile')
     return response.ok({ message: 'Ok', users })
 
   }
@@ -21,7 +26,32 @@ export default class UsersController {
       return response.badRequest({ error: error })
     }
 
-    await User.create(vali)
+    const role = await Role.find(vali.role_id)
+
+    if (!role) return response.notFound({ message: 'Rol no encontrado' })
+
+    await Database.transaction(async (trx) => {
+      const user = new User();
+      user.email = vali.email;
+      user.password = vali.password;
+      user.role_id = vali.role_id;
+
+      await user.useTransaction(trx).save();
+
+      const profile = new UserProfile();
+      profile.user_id = user.id;
+      profile.name = vali.name;
+      profile.last_name = vali.last_name;
+      profile.street = vali.street;
+      profile.number = vali.number;
+      profile.suburb = vali.suburb;
+      profile.city = vali.city;
+      profile.state = vali.state;
+      profile.zip_code = vali.zip_code;
+      profile.phone = vali.phone;
+
+      await profile.useTransaction(trx).save();
+    });
 
     return response.ok({ message: 'Ok' })
 
@@ -29,7 +59,10 @@ export default class UsersController {
 
   public async show({ params, response }: HttpContextContract) {
 
-    const user = await User.query().where('id', params.id).orderBy('id', 'desc')
+    const user = await User.query()
+      .where('id', params.id)
+      .preload('role')
+      .preload('profile')
 
     return response.ok({ message: 'Ok', user })
 
@@ -37,13 +70,29 @@ export default class UsersController {
 
   public async update({ params, response, request }: HttpContextContract) {
 
-    const user = await User.findOrFail(params.id)
 
     try {
-      const vali = await request.only(['role_id'])
+      const vali = await request.validate(UpdateUserValidator)
 
-      user.merge(vali)
-      await user.save()
+      await Database.transaction(async (trx) => {
+        const user = await User.findOrFail(params.id)
+        user.role_id = vali.role_id;
+
+        await user.useTransaction(trx).save();
+
+        const profile = await UserProfile.findByOrFail('user_id', user.id)
+        profile.name = vali.name;
+        profile.last_name = vali.last_name;
+        profile.street = vali.street;
+        profile.number = vali.number;
+        profile.suburb = vali.suburb;
+        profile.city = vali.city;
+        profile.state = vali.state;
+        profile.zip_code = vali.zip_code;
+        profile.phone = vali.phone;
+
+        await profile.useTransaction(trx).save();
+      });
 
       return response.ok({ message: 'Ok' })
     } catch (error) {

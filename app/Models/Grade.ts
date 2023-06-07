@@ -1,16 +1,13 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
-import User from './User'
+import { BaseModel, HasMany, column, hasMany} from '@ioc:Adonis/Lucid/Orm'
+import Group from './Group'
 
-export default class Role extends BaseModel {
+export default class Grade extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
   public name: string
-
-  @column()
-  public description: string | null
 
   @column()
   public active: boolean
@@ -21,6 +18,9 @@ export default class Role extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
 
-  @belongsTo(() => User)
-  public user: BelongsTo<typeof User>
+  @hasMany(() => Group, {
+    localKey:'id',
+    foreignKey: 'id',
+  })
+  public group: HasMany<typeof Group>
 }
