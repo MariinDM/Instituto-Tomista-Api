@@ -36,7 +36,7 @@ Route.group(() => {
   // Route.post('login','AuthController.singIn')
 
 })
-// .middleware('auth')
+.middleware('auth')
 .prefix('api/v1')
 
 Route.group(() => {
