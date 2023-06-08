@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import MailController from './MailersController';
 import Database from '@ioc:Adonis/Lucid/Database'
 import Role from 'App/Models/Role'
 import User from 'App/Models/User'
@@ -51,6 +52,9 @@ export default class UsersController {
       profile.phone = vali.phone;
 
       await profile.useTransaction(trx).save();
+
+      const mail = new MailController()
+      await mail.sendMail(user.email)
     });
 
     return response.ok({ message: 'Ok' })

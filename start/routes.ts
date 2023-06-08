@@ -42,5 +42,6 @@ Route.group(() => {
 Route.group(() => {
 
   Route.post('login','AuthController.singIn')
-
+  Route.post('send/route/signed','ForgotPasswordsController.sendRouteSigned')
+  
 }).prefix('api/v1')
