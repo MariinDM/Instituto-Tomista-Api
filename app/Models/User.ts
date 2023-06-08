@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, hasOne, HasOne, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Role from './Role'
 import UserProfile from './UserProfile'
+import ApiToken from './ApiToken'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -35,6 +36,12 @@ export default class User extends BaseModel {
       user.password = await Hash.make(user.password)
     }
   }
+
+  @hasMany(() => ApiToken,{
+    localKey: 'id',
+    foreignKey: 'user_id',
+  })
+  public api_token: HasMany<typeof ApiToken>
   
   @hasOne(() => Role, {
     localKey:'role_id',
