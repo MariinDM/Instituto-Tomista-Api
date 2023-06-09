@@ -42,6 +42,7 @@ Route.group(() => {
 Route.group(() => {
 
   Route.post('login','AuthController.singIn')
+  Route.post('logout','AuthController.logout')
   Route.post('send/route/signed','ForgotPasswordsController.sendRouteSigned')
   Route.post('reset-password','ForgotPasswordsController.resetPassword')
   

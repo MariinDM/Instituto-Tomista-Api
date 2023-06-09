@@ -14,4 +14,11 @@ export default class AuthController {
       return response.unauthorized({ message: 'Invalid credentials' })
     }
   }
+
+  public async logout({ auth, response }) {
+
+    await auth.logout()
+    return response.status(204).json({ message: 'Logged out successfully' })
+    
+  }
 }
