@@ -2,7 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Secction from 'App/Models/Secction'
 import SectionValidator from 'App/Validators/SectionValidator'
 
-export default class SectionsController {
+export default class LevelController {
   public async index({ response }: HttpContextContract) {
     const section = await Secction.all()
 

@@ -23,14 +23,13 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.get('/', async () => {
   return { hello: 'world' }
 })
-
+Route.get('/count', 'UserController.get_Quantity');
 Route.group(() => {
   Route.resource('roles', 'RolesController.ts')
   Route.resource('users', 'UsersController.ts')
   Route.resource('grades', 'GradesController.ts')
   Route.resource('sections', 'SectionsController.ts')
   Route.resource('groups', 'GroupsController.ts')
-  Route.resource('level', 'LevelController.ts')
   Route.resource('education/levels', 'EducationLevelsController.ts')
   
 
@@ -39,7 +38,7 @@ Route.group(() => {
 })
 .middleware('auth')
 .prefix('api/v1')
-Route.get('/users/count', 'UsersController.getQuantity');
+
 Route.group(() => {
 
   Route.post('login','AuthController.singIn')

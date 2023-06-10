@@ -16,7 +16,7 @@ export default class GradesController {
 
       var vali = await request.validate(GradeValidator)
       await Grade.create(vali)
-      return response.ok({ message: 'Ok' })
+      return response.ok({ message: 'Se creo el Grado correctamente' })
 
     } catch (error) {
       console.log(error)
@@ -49,7 +49,7 @@ export default class GradesController {
       grade.merge(vali)
       await grade.save()
 
-      return response.ok({ message: 'Ok' })
+      return response.ok({ message: 'Se actualizo el Grado' })
     } catch (error) {
 
       console.error(error)
@@ -65,7 +65,7 @@ export default class GradesController {
 
       grade.active = !grade.active
       await grade.save()
-      return response.ok({ message: 'Ok' })
+      return response.ok({ message: 'Se desactivo el Grado' })
 
     } catch (error) {
 

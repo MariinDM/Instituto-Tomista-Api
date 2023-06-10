@@ -124,7 +124,7 @@ export default class UsersController {
       }
 
       const countResult = await User.query()
-        .where("role_id", 1)
+        .where("role_id", role.id)
         .count("* as total");
       const totalUsers = countResult[0]["total"];
 

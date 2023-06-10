@@ -120,23 +120,15 @@ export default class UsersController {
       const role = await Role.find(2); // Obtener el rol con ID 1
 
       if (!role) {
-        return response.status(404).json({ message: "Rol no encontrado" });
+        return response.status(404).json({ message: 'Rol no encontrado' });
       }
-
-      const countResult = await User.query()
-        .where("role_id", 1)
-        .count("* as total");
-      const totalUsers = countResult[0]["total"];
-
-      if (totalUsers === 0) {
-        return response
-          .status(404)
-          .json({
-            message: "No se encontraron usuarios con el rol especificado",
-          });
-      }
-
+      
+      const count = await User.query().where('role_id', role.id).count('* as total');
+      
+      const totalUsers = count[0]['total'];
+      
       return response.status(200).json({ total: totalUsers });
+      
 
       // return response
       //   .status(200)

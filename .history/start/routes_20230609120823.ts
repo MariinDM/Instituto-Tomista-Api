@@ -30,16 +30,15 @@ Route.group(() => {
   Route.resource('grades', 'GradesController.ts')
   Route.resource('sections', 'SectionsController.ts')
   Route.resource('groups', 'GroupsController.ts')
-  Route.resource('level', 'LevelController.ts')
   Route.resource('education/levels', 'EducationLevelsController.ts')
-  
+  Route.get('/count', 'UserController.get_Quantity');
 
   // Route.post('login','AuthController.singIn')
 
 })
 .middleware('auth')
 .prefix('api/v1')
-Route.get('/users/count', 'UsersController.getQuantity');
+
 Route.group(() => {
 
   Route.post('login','AuthController.singIn')

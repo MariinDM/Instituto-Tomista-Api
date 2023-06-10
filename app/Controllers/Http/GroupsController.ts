@@ -41,7 +41,7 @@ export default class GroupsController {
     }
 
     await Group.create(vali)
-    return response.ok({ message: 'Ok' })
+    return response.ok({ message: 'Se creo el Grupo correctamente' })
   }
 
   public async show({ params, response }: HttpContextContract) {
@@ -66,7 +66,7 @@ export default class GroupsController {
       grade.merge(vali)
       await grade.save()
 
-      return response.ok({ message: 'Ok' })
+      return response.ok({ message: 'Se ha actualizo el Grupo correctamente' })
     } catch (error) {
 
       console.error(error)
@@ -83,7 +83,7 @@ export default class GroupsController {
 
       group.active = !group.active
       await group.save()
-      return response.ok({ message: 'Ok' })
+      return response.ok({ message: 'Se desactivo el Grupo' })
 
     } catch (error) {
       console.error(error)

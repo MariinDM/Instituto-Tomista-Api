@@ -51,8 +51,8 @@ export default class extends BaseSeeder {
 
     await UserProfile.createMany([
       {
-        name: 'Luis Alfredo',
-        last_name: 'Sanchez',
+        name: 'dddd',
+        last_name: 'dddd',
         street: 'Ejemplo',
         number: '1000',
         suburb: 'Col. Ejemplo',
@@ -63,8 +63,8 @@ export default class extends BaseSeeder {
         user_id: 1
       },
       {
-        name: 'Paola',
-        last_name: 'Gomez Macias',
+        name: 'ddd',
+        last_name: 'aaaa',
         street: 'Ejemplo',
         number: '1000',
         suburb: 'Col. Ejemplo',
@@ -75,8 +75,8 @@ export default class extends BaseSeeder {
         user_id: 2
       },
       {
-        name: 'Aneth ',
-        last_name: 'Elvira Castañeda',
+        name: 'dddd',
+        last_name: 'dddd',
         street: 'Ejemplo',
         number: '1000',
         suburb: 'Col. Ejemplo',
@@ -87,8 +87,8 @@ export default class extends BaseSeeder {
         user_id: 3
       },
       {
-        name: 'Edgar Alejandro Segovia',
-        last_name: 'Guzman',
+        name: 'ddddddaaaa',
+        last_name: 'aaaaa',
         street: 'Ejemplo',
         number: '1000',
         suburb: 'Col. Ejemplo',
@@ -100,7 +100,7 @@ export default class extends BaseSeeder {
       },
       {
         name: 'Diego',
-        last_name: 'Marin Montalvo',
+        last_name: 'Marin',
         street: 'Ejemplo',
         number: '1000',
         suburb: 'Col. Ejemplo',

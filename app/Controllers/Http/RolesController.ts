@@ -30,7 +30,7 @@ export default class RolesController {
 
         await Role.create(vali)
 
-        return response.ok({ message: 'Ok' })
+        return response.ok({ message: 'Se ha creado un Rol correctamente' })
 
     }
 
@@ -44,7 +44,7 @@ export default class RolesController {
             role.merge(vali)
             await role.save()
 
-            return response.ok({ message: 'Ok' })
+            return response.ok({ message: 'Se ha actualizado un Rol correctamente' })
         } catch (error) {
             console.error(error)
 
@@ -62,7 +62,7 @@ export default class RolesController {
 
             role.active = !role.active
             await role.save()
-            return response.ok({ message: 'Ok' })
+            return response.ok({ message: 'Se ha desactivado un rol' })
 
         } catch (error) {
 

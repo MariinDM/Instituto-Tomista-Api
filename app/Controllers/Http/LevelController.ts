@@ -1,14 +1,14 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Secction from 'App/Models/Secction'
-import SectionValidator from 'App/Validators/SectionValidator'
+import Secction from 'App/Models/Level'
+import SectionValidator from 'App/Validators/LevelValidator'
 
-export default class SectionsController {
+export default class LevelController {
   public async index({ response }: HttpContextContract) {
-    const section = await Secction.all()
+    const level = await Secction.all()
 
     // console.log(roles.find(n => n.id == 4))
 
-    return response.ok({ message: 'Ok', section })
+    return response.ok({ message: 'Ok', level })
   }
 
   public async store({ request, response }: HttpContextContract) {
@@ -17,7 +17,7 @@ export default class SectionsController {
       const vali = await request.validate(SectionValidator)
       
       await Secction.create(vali)
-      return response.ok({ message: 'Se ha creado una Seccion correctamente' })
+      return response.ok({ message: 'Se ha creado una Nivel correctamente' })
 
     } catch (error) {
 
@@ -43,12 +43,12 @@ export default class SectionsController {
     const section = await Secction.findOrFail(params.id)
 
     try {
-      const vali = await request.only(['name'])
+        const vali = await request.only(['name', 'description'])
 
       section.merge(vali)
       await section.save()
 
-      return response.ok({ message: 'Se ha actualizado una seccion correctamente' })
+      return response.ok({ message: 'Se ha actualizado un Nivel correctamente' })
     } catch (error) {
 
       console.error(error)
@@ -64,7 +64,7 @@ export default class SectionsController {
 
       section.active = !section.active
       await section.save()
-      return response.ok({ message: 'Se ha desactivado la Seccion' })
+      return response.ok({ message: 'Se ha desactivado el Nivel' })
 
     } catch (error) {
 
