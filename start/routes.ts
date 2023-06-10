@@ -32,23 +32,18 @@ Route.group(() => {
   Route.resource('groups', 'GroupsController.ts')
   Route.resource('level', 'LevelController.ts')
   Route.resource('education/levels', 'EducationLevelsController.ts')
-  
 
-  // Route.post('login','AuthController.singIn')
+  Route.get('me', 'AuthController.getUserProfile')
+  Route.post('logout','AuthController.logout')
 
 })
 .middleware('auth')
 .prefix('api/v1')
-Route.get('/users/count', 'UsersController.getQuantity');
+
+
 Route.group(() => {
 
   Route.post('login','AuthController.singIn')
-  Route.get('login','AuthController.singIn')
-
-  Route.get('user-profile/:id', 'AuthController.getUserProfile');
-
-  // getUserProfile
-  Route.post('logout','AuthController.logout')
   Route.post('send/route/signed','ForgotPasswordsController.sendRouteSigned')
   Route.post('reset-password','ForgotPasswordsController.resetPassword')
   

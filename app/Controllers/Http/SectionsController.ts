@@ -3,19 +3,26 @@ import Secction from 'App/Models/Secction'
 import SectionValidator from 'App/Validators/SectionValidator'
 
 export default class SectionsController {
-  public async index({ response }: HttpContextContract) {
-    const section = await Secction.all()
+  public async index({ response, auth }: HttpContextContract) {
 
-    // console.log(roles.find(n => n.id == 4))
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
+    const section = await Secction.all()
 
     return response.ok({ message: 'Ok', section })
   }
 
-  public async store({ request, response }: HttpContextContract) {
+  public async store({ request, response, auth }: HttpContextContract) {
     try {
 
+      const logged = await auth.user
+
+      if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
       const vali = await request.validate(SectionValidator)
-      
+
       await Secction.create(vali)
       return response.ok({ message: 'Se ha creado una Seccion correctamente' })
 
@@ -39,10 +46,15 @@ export default class SectionsController {
     }
   }
 
-  public async update({ params, response, request }: HttpContextContract) {
+  public async update({ params, response, request, auth }: HttpContextContract) {
     const section = await Secction.findOrFail(params.id)
 
     try {
+
+      const logged = await auth.user
+
+      if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
       const vali = await request.only(['name'])
 
       section.merge(vali)
@@ -57,10 +69,14 @@ export default class SectionsController {
     }
   }
 
-  public async destroy({ params, response }: HttpContextContract) {
+  public async destroy({ params, response, auth }: HttpContextContract) {
     const section = await Secction.findOrFail(params.id)
 
     try {
+
+      const logged = await auth.user
+
+      if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
 
       section.active = !section.active
       await section.save()

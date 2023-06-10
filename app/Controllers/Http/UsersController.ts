@@ -8,20 +8,36 @@ import UpdateUserValidator from "App/Validators/UpdateUserValidator";
 import UserValidator from "App/Validators/UserValidator";
 
 export default class UsersController {
-  public async index({ response }: HttpContextContract) {
-    const users = await User.query()
-      .orderBy("id", "desc")
-      .preload("role")
-      .preload("profile");
-    return response.ok({ message: "Ok", users });
+  public async index({ response, auth }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
+    if (logged) {
+      const users = await User.query()
+        .orderBy("id", "desc")
+        .where('role_id', '>', logged.role_id)
+        .preload("role")
+        .preload("profile")
+
+      return response.ok({ message: "Ok", users });
+    } else {
+      return response.notFound({ error: "No se encontró el usuario autenticado" });
+    }
+
   }
 
-  public async store({ response, request }: HttpContextContract) {
+  public async store({ response, request, auth }: HttpContextContract) {
     try {
       var vali = await request.validate(UserValidator);
     } catch (error) {
       return response.badRequest({ error: error });
     }
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
 
     const role = await Role.find(vali.role_id);
 
@@ -53,12 +69,7 @@ export default class UsersController {
       await mail.sendMail(user.email);
     });
 
-    // return response.ok({ message: 'Se ha creado un usuario correctamente' })
-    // // return response.ok(JSON.stringify({ message: 'Se ha creado un usuario correctamente' }));
-    // return response.json({ message: 'Se ha creado un usuario correctamente' });
-    return response
-      .status(200)
-      .json({ message: "Se ha creado un usuario correctamente" });
+    return response.ok({ message: 'Se ha creado un usuario correctamente' })
   }
 
   public async show({ params, response }: HttpContextContract) {
@@ -70,9 +81,13 @@ export default class UsersController {
     return response.ok({ message: "Ok", user });
   }
 
-  public async update({ params, response, request }: HttpContextContract) {
+  public async update({ params, response, request, auth }: HttpContextContract) {
     try {
       const vali = await request.validate(UpdateUserValidator);
+
+      const logged = await auth.user
+
+      if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
 
       await Database.transaction(async (trx) => {
         const user = await User.findOrFail(params.id);
@@ -102,49 +117,22 @@ export default class UsersController {
     }
   }
 
-  public async destroy({ params, response }: HttpContextContract) {
+  public async destroy({ params, response, auth }: HttpContextContract) {
+    
     const user = await User.findOrFail(params.id);
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
 
     try {
       user.active = !user.active;
       await user.save();
-      return response.ok({ message: "Ok" });
+      return response.ok({ message: "Estado cambiado correctamente" });
     } catch (error) {
       console.error(error);
       return response.badRequest({ error: error });
     }
   }
 
-  public async getQuantity({ response }: HttpContextContract) {
-    try {
-      const role = await Role.find(2); // Obtener el rol con ID 1
-
-      if (!role) {
-        return response.status(404).json({ message: "Rol no encontrado" });
-      }
-
-      const countResult = await User.query()
-        .where("role_id", 1)
-        .count("* as total");
-      const totalUsers = countResult[0]["total"];
-
-      if (totalUsers === 0) {
-        return response
-          .status(404)
-          .json({
-            message: "No se encontraron usuarios con el rol especificado",
-          });
-      }
-
-      return response.status(200).json({ total: totalUsers });
-
-      // return response
-      //   .status(200)
-      //   .json({ admin: count[0].total, docente: 2, alumno: 5 });
-    } catch (error) {
-      return response
-        .status(500)
-        .json({ message: "Error al contar usuarios con rol 1" });
-    }
-  }
 }
