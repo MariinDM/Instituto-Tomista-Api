@@ -3,8 +3,13 @@ import Role from 'App/Models/Role'
 import RoleValidator from 'App/Validators/RoleValidator'
 
 export default class RolesController {
-    
-    public async index({ response }: HttpContextContract) {
+
+    public async index({ auth, response }: HttpContextContract) {
+
+        const logged = await auth.user
+
+        if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
 
         const roles = await Role.all()
 
@@ -13,14 +18,23 @@ export default class RolesController {
         return response.ok({ message: 'Ok', roles })
     }
 
-    public async show({ params, response }: HttpContextContract) {
+    public async show({ auth, params, response }: HttpContextContract) {
+
+        const logged = await auth.user
+
+        if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
 
         const role = await Role.query().where('id', params.id).orderBy('id', 'desc')
 
         return response.ok({ message: 'Ok', role })
     }
 
-    public async store({ response, request }: HttpContextContract) {
+    public async store({ auth, response, request }: HttpContextContract) {
+
+        const logged = await auth.user
+
+        if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
 
         try {
             var vali = await request.validate(RoleValidator)
@@ -34,7 +48,12 @@ export default class RolesController {
 
     }
 
-    public async update({ params, response, request }: HttpContextContract) {
+    public async update({ auth, params, response, request }: HttpContextContract) {
+
+        const logged = await auth.user
+
+        if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
 
         const role = await Role.findOrFail(params.id)
 
@@ -54,7 +73,12 @@ export default class RolesController {
 
     }
 
-    public async destroy({ params, response }: HttpContextContract) {
+    public async destroy({ auth, params, response }: HttpContextContract) {
+
+        const logged = await auth.user
+
+        if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
 
         const role = await Role.findOrFail(params.id)
 

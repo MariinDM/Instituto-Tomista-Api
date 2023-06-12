@@ -3,15 +3,23 @@ import EducationLevel from 'App/Models/EducationLevel'
 import EducationLevelValidator from 'App/Validators/EducationLevelValidator'
 
 export default class EducationLevelsController {
-  public async index({ response }: HttpContextContract) {
-    const educa = await EducationLevel.all()
+  public async index({ auth, response }: HttpContextContract) {
 
-    // console.log(roles.find(n => n.id == 4))
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
+    const educa = await EducationLevel.all()
 
     return response.ok({ message: 'Ok', educa })
   }
 
-  public async store({ request, response }: HttpContextContract) {
+  public async store({ auth, request, response }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
     try {
 
       var vali = await request.validate(EducationLevelValidator)
@@ -26,7 +34,12 @@ export default class EducationLevelsController {
     }
   }
 
-  public async show({ params, response }: HttpContextContract) {
+  public async show({ auth, params, response }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
     try {
 
       const educa = await EducationLevel.query().where('id', params.id).orderBy('id', 'desc')
@@ -39,7 +52,12 @@ export default class EducationLevelsController {
     }
   }
 
-  public async update({ params, response, request }: HttpContextContract) {
+  public async update({ auth, params, response, request }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
     const educa = await EducationLevel.findOrFail(params.id)
 
     try {
@@ -57,7 +75,12 @@ export default class EducationLevelsController {
     }
   }
 
-  public async destroy({ params, response }: HttpContextContract) {
+  public async destroy({ auth, params, response }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
     const edca = await EducationLevel.findOrFail(params.id)
 
     try {

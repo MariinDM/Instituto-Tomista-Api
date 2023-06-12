@@ -4,7 +4,12 @@ import Group from 'App/Models/Group'
 import Secction from 'App/Models/Secction'
 
 export default class GroupsController {
-  public async index({ response }: HttpContextContract) {
+  public async index({ auth, response }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
     const group = await Group.query()
       .preload('grade')
       .preload('section')
@@ -12,7 +17,12 @@ export default class GroupsController {
     return response.ok({ message: 'Ok', group })
   }
 
-  public async store({ request, response }: HttpContextContract) {
+  public async store({ auth, request, response }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
     try {
 
       var vali = await request.only(['section_id', 'grade_id'])
@@ -44,7 +54,12 @@ export default class GroupsController {
     return response.ok({ message: 'Se creo el Grupo correctamente' })
   }
 
-  public async show({ params, response }: HttpContextContract) {
+  public async show({ auth, params, response }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
     try {
 
       const grade = await Group.query().where('id', params.id).orderBy('id', 'desc')
@@ -57,7 +72,12 @@ export default class GroupsController {
     }
   }
 
-  public async update({ params, response, request }: HttpContextContract) {
+  public async update({ auth, params, response, request }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
     const grade = await Group.findOrFail(params.id)
 
     try {
@@ -75,7 +95,11 @@ export default class GroupsController {
     }
   }
 
-  public async destroy({ params, response }: HttpContextContract) {
+  public async destroy({ auth, params, response }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
 
     const group = await Group.findOrFail(params.id)
 

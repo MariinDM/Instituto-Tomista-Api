@@ -3,15 +3,22 @@ import Grade from 'App/Models/Grade'
 import GradeValidator from 'App/Validators/GradeValidator'
 
 export default class GradesController {
-  public async index({ response }: HttpContextContract) {
-    const grade = await Grade.all()
+  public async index({ auth, response }: HttpContextContract) {
 
-    // console.log(roles.find(n => n.id == 4))
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
+    const grade = await Grade.all()
 
     return response.ok({ message: 'Ok', grade: grade })
   }
 
-  public async store({ request, response }: HttpContextContract) {
+  public async store({ request, auth, response }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
     try {
 
       var vali = await request.validate(GradeValidator)
@@ -27,7 +34,11 @@ export default class GradesController {
 
   }
 
-  public async show({ params, response }: HttpContextContract) {
+  public async show({ auth, params, response }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
     try {
 
       const grade = await Grade.query().where('id', params.id).orderBy('id', 'desc')
@@ -40,7 +51,11 @@ export default class GradesController {
     }
   }
 
-  public async update({ params, response, request }: HttpContextContract) {
+  public async update({ auth, params, response, request }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
     const grade = await Grade.findOrFail(params.id)
 
     try {
@@ -58,7 +73,11 @@ export default class GradesController {
     }
   }
 
-  public async destroy({ params, response }: HttpContextContract) {
+  public async destroy({ auth, params, response }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
     const grade = await Grade.findOrFail(params.id)
 
     try {
