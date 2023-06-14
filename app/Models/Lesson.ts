@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
-import Lesson from './Lesson'
+import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import EducationLevel from './EducationLevel'
 
-export default class EducationLevel extends BaseModel {
+export default class Lesson extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
@@ -13,6 +13,9 @@ export default class EducationLevel extends BaseModel {
   public description: string
 
   @column()
+  public educa_level: number
+
+  @column()
   public active: boolean
 
   @column.dateTime({ autoCreate: true, serializeAs: null })
@@ -21,9 +24,9 @@ export default class EducationLevel extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
 
-  @hasMany(() => Lesson, {
+  @hasOne(() => EducationLevel, {
     localKey: 'id',
-    foreignKey: 'educa_level',
+    foreignKey: 'id',
   })
-  public lesson: HasMany<typeof Lesson>
+  public educa: HasOne<typeof EducationLevel>
 }

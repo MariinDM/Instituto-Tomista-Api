@@ -1,29 +1,31 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Grade from 'App/Models/Grade'
-import GradeValidator from 'App/Validators/GradeValidator'
+import Lesson from 'App/Models/Lesson';
+import LessonValidator from 'App/Validators/LessonValidator';
 
-export default class GradesController {
+export default class LessonsController {
   public async index({ auth, response }: HttpContextContract) {
 
     const logged = await auth.user
 
     if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
 
-    const grade = await Grade.all()
+    const lesson = await Lesson.query()
+      .preload('educa')
 
-    return response.ok({ message: 'Ok', grade: grade })
+    return response.ok({ message: 'Ok', lesson })
+
   }
 
-  public async store({ request, auth, response }: HttpContextContract) {
+  public async store({ auth, response, request }: HttpContextContract) {
 
     const logged = await auth.user
 
     if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
     try {
 
-      var vali = await request.validate(GradeValidator)
-      await Grade.create(vali)
-      return response.ok({ message: 'Se creo el Grado correctamente' })
+      var vali = await request.validate(LessonValidator)
+      await Lesson.create(vali)
+      return response.ok({ message: 'Se creo la materia correctamente' })
 
     } catch (error) {
       console.log(error)
@@ -31,17 +33,15 @@ export default class GradesController {
       return response.badRequest({ error: error.messages })
 
     }
-
   }
 
-  public async show({ auth, params, response }: HttpContextContract) {
-
+  public async show({ auth, response, params }: HttpContextContract) {
     const logged = await auth.user
 
     if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
     try {
 
-      const grade = await Grade.query().where('id', params.id).orderBy('id', 'desc')
+      const grade = await Lesson.query().where('id', params.id).orderBy('id', 'desc')
       return response.ok({ message: 'Ok', grade })
 
     } catch (error) {
@@ -51,20 +51,19 @@ export default class GradesController {
     }
   }
 
-  public async update({ auth, params, response, request }: HttpContextContract) {
-
+  public async update({ auth, request, response, params }: HttpContextContract) {
     const logged = await auth.user
 
     if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
-    const grade = await Grade.findOrFail(params.id)
+    const grade = await Lesson.findOrFail(params.id)
 
     try {
-      const vali = await request.only(['name'])
+      const vali = await request.only(['name', 'description', 'educa_level'])
 
       grade.merge(vali)
       await grade.save()
 
-      return response.ok({ message: 'Se actualizo el Grado' })
+      return response.ok({ message: 'Se actualizo la materia' })
     } catch (error) {
 
       console.error(error)
@@ -73,12 +72,11 @@ export default class GradesController {
     }
   }
 
-  public async destroy({ auth, params, response }: HttpContextContract) {
-
+  public async destroy({ auth, response, params }: HttpContextContract) {
     const logged = await auth.user
 
     if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
-    const grade = await Grade.findOrFail(params.id)
+    const grade = await Lesson.findOrFail(params.id)
 
     try {
 

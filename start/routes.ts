@@ -30,8 +30,8 @@ Route.group(() => {
   Route.resource('grades', 'GradesController.ts')
   Route.resource('sections', 'SectionsController.ts')
   Route.resource('groups', 'GroupsController.ts')
-  Route.resource('level', 'LevelController.ts')
   Route.resource('education/levels', 'EducationLevelsController.ts')
+  Route.resource('lessons', 'LessonsController.ts')
 
   Route.get('me', 'AuthController.getUserProfile')
   Route.post('logout','AuthController.logout')
