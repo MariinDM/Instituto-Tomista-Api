@@ -25,7 +25,9 @@ Route.get('/', async () => {
 })
 
 Route.group(() => {
+  Route.resource('views', 'ViewsController.ts')
   Route.resource('roles', 'RolesController.ts')
+  Route.resource('roleViews', 'RoleViewsController.ts')
   Route.resource('users', 'UsersController.ts')
   Route.resource('grades', 'GradesController.ts')
   Route.resource('sections', 'SectionsController.ts')
