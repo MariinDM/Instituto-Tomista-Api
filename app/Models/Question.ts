@@ -1,5 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, HasMany, ManyToMany, column, hasMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import Test from './Test'
+import TestQuestion from './TestQuestion'
+
 
 export default class Question extends BaseModel {
   @column({ isPrimary: true })
@@ -16,4 +19,19 @@ export default class Question extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @manyToMany(() => Test, {
+    localKey: 'id',
+    pivotForeignKey: 'question_id',
+    relatedKey: 'id',
+    pivotRelatedForeignKey: 'test_id',
+    pivotTable: 'test_questions',
+  })
+  public tests: ManyToMany<typeof Test>
+
+  @hasMany(() => TestQuestion,{
+    localKey: 'id',
+    foreignKey: 'question_id',
+  })
+  public test_questions: HasMany<typeof TestQuestion>
 }
