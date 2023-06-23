@@ -11,7 +11,7 @@ export default class RoleViewsController {
 
         if (logged) {
             const roleViews = await RoleView.query()
-                .orderBy("id", "desc")
+                .orderBy("id", "asc")
                 .preload("views")
                 .preload("roles")
 
@@ -41,6 +41,24 @@ export default class RoleViewsController {
             console.log(error)
             return response.badRequest({ error: error });
         }
+    }
+
+    public async show({ auth, response }: HttpContextContract) {
+
+        const logged = await auth.user
+
+        // if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
+        const role = await Role.find(logged?.role_id)
+
+        if (!role) return response.status(404).send({ message: "Rol no encontrado" });
+
+        const roleViews = await RoleView.query()
+            .where('role_id', role.id)
+            .preload('views')
+
+
+        return response.ok({ message: 'Ok', roleViews })
     }
 
 }

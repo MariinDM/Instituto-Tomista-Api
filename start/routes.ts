@@ -36,17 +36,20 @@ Route.group(() => {
   Route.resource('lessons', 'LessonsController.ts')
 
   Route.get('me', 'AuthController.getUserProfile')
-  Route.post('logout','AuthController.logout')
-
+  Route.post('logout', 'AuthController.logout')
+  
+  Route.post('upload/:id', 'FileUploadsController.uploadProfilePicture')
+  
 })
 .middleware('auth')
 .prefix('api/v1')
 
 
 Route.group(() => {
-
-  Route.post('login','AuthController.singIn')
-  Route.post('send/route/signed','ForgotPasswordsController.sendRouteSigned')
-  Route.post('reset-password','ForgotPasswordsController.resetPassword')
+  
+  Route.post('login', 'AuthController.singIn')
+  Route.post('send/route/signed', 'ForgotPasswordsController.sendRouteSigned')
+  Route.post('reset-password', 'ForgotPasswordsController.resetPassword')
+  Route.get('get/profile/picture/:filename', 'FileUploadsController.getProfilePicture')
   
 }).prefix('api/v1')

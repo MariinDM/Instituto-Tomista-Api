@@ -16,6 +16,12 @@ export default class UserProfile extends BaseModel {
   public last_name: string
 
   @column()
+  public image: string
+
+  @column()
+  public birthday: string
+
+  @column()
   public street: string
 
   @column()

@@ -13,6 +13,7 @@ export default class GroupsController {
     const group = await Group.query()
       .preload('grade')
       .preload('section')
+      .orderBy('id', 'desc')
 
     return response.ok({ message: 'Ok', group })
   }
