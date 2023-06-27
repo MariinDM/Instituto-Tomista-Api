@@ -56,7 +56,33 @@ export default class extends BaseSeeder {
         name: 'Grupos',
         route: '/groups',
         icon: 'group'
-      }
+      },
+      {
+        name: 'Niveles Educativos',
+        route: '/education-levels',
+        icon: 'school'
+      },
+      {
+        name: 'Materias',
+        route: '/lessons',
+        icon: 'group'
+      },
+      {
+        name: 'Preguntas',
+        route: '/questions',
+        icon: 'question_mark'
+      },
+      {
+        name: 'Encuestas',
+        route: '/tests',
+        icon: 'quiz'
+      },
+      {
+        name: 'Encuestas y Preguntas',
+        route: '/tests-questions',
+        icon: 'checklist'
+      },
+
     ])
 
     await RoleView.createMany([
@@ -66,6 +92,11 @@ export default class extends BaseSeeder {
       { role_id: 1, view_id: 4 },
       { role_id: 1, view_id: 5 },
       { role_id: 1, view_id: 6 },
+      { role_id: 1, view_id: 7 },
+      { role_id: 1, view_id: 8 },
+      { role_id: 1, view_id: 9 },
+      { role_id: 1, view_id: 10 },
+      { role_id: 1, view_id: 11 },
       { role_id: 2, view_id: 1 },
       { role_id: 2, view_id: 2 },
       { role_id: 3, view_id: 1 },
