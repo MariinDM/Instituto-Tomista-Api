@@ -13,19 +13,19 @@ export default class TestQuestion extends BaseModel {
   @column()
   public question_id: number
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
 
-  @belongsTo(() => Test,{
+  @belongsTo(() => Test, {
     localKey: 'id',
     foreignKey: 'test_id',
   })
   public tests: BelongsTo<typeof Test>
 
-  @belongsTo(() => Question,{
+  @belongsTo(() => Question, {
     localKey: 'id',
     foreignKey: 'question_id',
   })
