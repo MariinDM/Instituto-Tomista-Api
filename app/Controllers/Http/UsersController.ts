@@ -29,8 +29,12 @@ export default class UsersController {
   }
 
   public async store({ response, request, auth }: HttpContextContract) {
+
+    
+    var pass = ''
     try {
       var vali = await request.validate(UserValidator);
+      pass = vali.password
     } catch (error) {
       return response.badRequest({ error: error });
     }
@@ -43,6 +47,8 @@ export default class UsersController {
 
     if (!role) return response.notFound({ message: "Rol no encontrado" });
 
+    var id = 0;
+
     await Database.transaction(async (trx) => {
       const user = new User();
       user.email = vali.email;
@@ -50,6 +56,8 @@ export default class UsersController {
       user.role_id = vali.role_id;
 
       await user.useTransaction(trx).save();
+
+      id = user.id
 
       const profile = new UserProfile();
       profile.user_id = user.id;
@@ -62,14 +70,15 @@ export default class UsersController {
       profile.state = vali.state;
       profile.zip_code = vali.zip_code;
       profile.phone = vali.phone;
+      profile.birthday = vali.birthday;
 
       await profile.useTransaction(trx).save();
 
       const mail = new MailController();
-      await mail.sendMail(user.email);
+      await mail.sendMail(user.email, pass);
     });
 
-    return response.ok({ message: 'Se ha creado un usuario correctamente' })
+    return response.ok({ message: 'Se ha creado un usuario correctamente', user_id: id })
   }
 
   public async show({ params, response }: HttpContextContract) {
@@ -118,7 +127,7 @@ export default class UsersController {
   }
 
   public async destroy({ params, response, auth }: HttpContextContract) {
-    
+
     const user = await User.findOrFail(params.id);
 
     const logged = await auth.user

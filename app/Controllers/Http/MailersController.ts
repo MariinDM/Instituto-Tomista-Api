@@ -5,12 +5,12 @@ import User from 'App/Models/User';
 // import Env from '@ioc:Adonis/Core/Env'
 
 export default class MailersController {
-    public async sendMail(email: string) {
+    public async sendMail(email: string, password: string) {
         await Mail.send((message) => {
             message
                 .to(email)
                 .subject('¡Bienvenido al Instituto Tomista!')
-                .text('Ya puedes ingresar a tu cuenta')
+                .text(`Ya puedes ingresar a tu cuenta, esta es tu contraseña: ${password} \n Se recomienda que una vez inicie sesión se cambie`)
             // .from(email)
             // .htmlView('welcome', { name: 'John Doe' }) // vista de correo 'welcome' con datos adicionales
         })

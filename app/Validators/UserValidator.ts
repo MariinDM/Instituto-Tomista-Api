@@ -62,6 +62,9 @@ export default class UserValidator {
     phone: schema.string([
       rules.required()
     ]),
+    birthday: schema.string([
+      rules.required()
+    ]),
   })
 
   /**
