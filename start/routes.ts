@@ -32,6 +32,7 @@ Route.group(() => {
   Route.resource('grades', 'GradesController.ts')
   Route.resource('sections', 'SectionsController.ts')
   Route.resource('groups', 'GroupsController.ts')
+  Route.resource('groupUserLessons', 'GroupUserLessonsController.ts')
   Route.resource('education/levels', 'EducationLevelsController.ts')
   Route.resource('lessons', 'LessonsController.ts')
   Route.resource('questions', 'QuestionsController.ts')

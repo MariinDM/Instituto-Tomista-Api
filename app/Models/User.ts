@@ -1,9 +1,11 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, hasOne, HasOne, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, hasOne, HasOne, HasMany, hasMany, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Role from './Role'
 import UserProfile from './UserProfile'
 import ApiToken from './ApiToken'
+import GroupUserLesson from './GroupUserLesson'
+import Lesson from './Lesson'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -54,4 +56,19 @@ export default class User extends BaseModel {
     foreignKey: 'user_id',
   })
   public profile: HasOne<typeof UserProfile>
+
+  @manyToMany(() => Lesson, {
+    localKey: 'id',
+    pivotForeignKey: 'user_id',
+    relatedKey: 'id',
+    pivotRelatedForeignKey: 'lesson_id',
+    pivotTable: 'group_user_lessons',
+  })
+  public lessons: ManyToMany<typeof Lesson>
+
+  @hasMany(() => GroupUserLesson,{
+    localKey: 'id',
+    foreignKey: 'user_id',
+  })
+  public groupUserLessons: HasMany<typeof GroupUserLesson>
 }

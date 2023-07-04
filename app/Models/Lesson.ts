@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, HasMany, ManyToMany, belongsTo, column, hasMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import EducationLevel from './EducationLevel'
+import GroupUserLesson from './GroupUserLesson'
+import Group from './Group'
 
 export default class Lesson extends BaseModel {
   @column({ isPrimary: true })
@@ -29,4 +31,19 @@ export default class Lesson extends BaseModel {
     foreignKey: 'educa_level',
   })
   public educa: BelongsTo<typeof EducationLevel>
+
+  @manyToMany(() => Group, {
+    localKey: 'id',
+    pivotForeignKey: 'lesson_id',
+    relatedKey: 'id',
+    pivotRelatedForeignKey: 'group_id',
+    pivotTable: 'group_user_lessons',
+  })
+  public groups: ManyToMany<typeof Group>
+
+  @hasMany(() => GroupUserLesson,{
+    localKey: 'id',
+    foreignKey: 'lesson_id',
+  })
+  public groupUserLessons: HasMany<typeof GroupUserLesson>
 }
