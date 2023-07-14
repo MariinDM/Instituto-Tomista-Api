@@ -9,7 +9,8 @@ export default class EducationLevelsController {
 
     if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
 
-    const educa = await EducationLevel.all()
+    const educa = await EducationLevel.query()
+    .preload('groupUserLessons')
 
     return response.ok({ message: 'Ok', educa })
   }
@@ -93,6 +94,29 @@ export default class EducationLevelsController {
 
       console.error(error)
       return response.badRequest({ error: error })
+    }
+  }
+
+  public async filterLessons({ auth, response, request }: HttpContextContract) {
+
+    const logged = await auth.user
+
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+
+
+    try {
+      const { id } = await request.all();
+
+      const educa = await EducationLevel.query()
+        .where('id', id)
+        .first()
+
+      return response.ok({ message: 'Ok', educa })
+    } catch (error) {
+
+      console.error(error)
+      return response.badRequest({ error: error })
+
     }
   }
 }

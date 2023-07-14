@@ -43,6 +43,7 @@ Route.group(() => {
   Route.post('logout', 'AuthController.logout')
   
   Route.post('upload/:id', 'FileUploadsController.uploadProfilePicture')
+  Route.post('filter/lessons', 'EducationLevelsController.filterLessons')
   
 })
 .middleware('auth')

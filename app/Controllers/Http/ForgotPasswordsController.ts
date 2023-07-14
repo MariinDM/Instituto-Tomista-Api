@@ -41,7 +41,7 @@ export default class ForgotPasswordsController {
 
     public async resetPassword({ response, request, auth }: HttpContextContract) {
 
-        const { password, confirmPassword } = await request.all();
+        const { password, confirmPassword, type } = await request.all();
 
         if (password != confirmPassword) return response.badRequest({ message: 'Las contraseñas no coinciden' })
 
@@ -57,7 +57,9 @@ export default class ForgotPasswordsController {
 
         await user.merge({ password: confirmPassword }).save()
 
-        await auth.use('api').revoke()
+        if (!type) {
+            await auth.use('api').revoke()
+        }
 
         return response.ok({ message: 'Contraseña restablecida' })
 

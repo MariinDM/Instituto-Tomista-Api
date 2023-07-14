@@ -13,6 +13,7 @@ export default class GroupsController {
     const group = await Group.query()
       .preload('grade')
       .preload('section')
+      .preload('students')
       .orderBy('id', 'desc')
 
     return response.ok({ message: 'Ok', group })
@@ -26,14 +27,12 @@ export default class GroupsController {
 
     try {
 
-      var vali = await request.only(['section_id', 'grade_id'])
+      var vali = await request.only(['section_id', 'grade_id', 'education_level_id'])
 
     } catch (error) {
       console.log(error)
       return response.badRequest({ error: error })
     }
-
-    // const data = request.body()
 
     const section = await Secction.find(vali.section_id)
     const grade = await Grade.find(vali.grade_id)
@@ -44,7 +43,7 @@ export default class GroupsController {
 
     const exist = await Group.query().where({
       section_id: section.id,
-      grade_id: grade.id
+      grade_id: grade.id,
     })
 
     if (exist.length > 0) {

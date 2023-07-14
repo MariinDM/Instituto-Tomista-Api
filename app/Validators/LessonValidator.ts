@@ -27,10 +27,7 @@ export default class LessonValidator {
     name: schema.string({}, [
       // rules.unique({ table: 'lessons', column: 'name' }),
       rules.required(),
-    ]),
-    educa_level: schema.number([
-      rules.required()
-    ]),
+    ])
   })
 
   /**

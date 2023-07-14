@@ -9,8 +9,7 @@ export default class LessonsController {
 
     if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
 
-    const lesson = await Lesson.query()
-      .preload('educa')
+    const lesson = await Lesson.all()
 
     return response.ok({ message: 'Ok', lesson })
 

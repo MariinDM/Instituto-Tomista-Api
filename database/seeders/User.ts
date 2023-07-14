@@ -2,9 +2,11 @@ import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import EducationLevel from 'App/Models/EducationLevel'
 import Grade from 'App/Models/Grade'
 import Group from 'App/Models/Group'
+import Lesson from 'App/Models/Lesson'
 import Role from 'App/Models/Role'
 import RoleView from 'App/Models/RoleView'
 import Secction from 'App/Models/Secction'
+import Student from 'App/Models/Student'
 import User from 'App/Models/User'
 import UserProfile from 'App/Models/UserProfile'
 import View from 'App/Models/View'
@@ -68,6 +70,11 @@ export default class extends BaseSeeder {
         icon: 'group'
       },
       {
+        name: 'Asignar Materias',
+        route: '/user-lessons',
+        icon: 'group'
+      },
+      {
         name: 'Preguntas',
         route: '/questions',
         icon: 'question_mark'
@@ -97,6 +104,7 @@ export default class extends BaseSeeder {
       { role_id: 1, view_id: 9 },
       { role_id: 1, view_id: 10 },
       { role_id: 1, view_id: 11 },
+      { role_id: 1, view_id: 12 },
       { role_id: 2, view_id: 1 },
       { role_id: 2, view_id: 2 },
       { role_id: 3, view_id: 1 },
@@ -109,25 +117,36 @@ export default class extends BaseSeeder {
         role_id: 1,
       },
       {
-        email: 'docente@gmail.com',
+        email: 'docente1@gmail.com',
         password: '1234567890',
         role_id: 2,
       },
       {
+        email: 'docente2@gmail.com',
+        password: '1234567890',
+        role_id: 2
+      },
+      {
         email: 'alumno1@gmail.com',
         password: '1234567890',
-        role_id: 3,
+        role_id: 2
       },
       {
         email: 'alumno2@gmail.com',
         password: '1234567890',
-        role_id: 3
+        role_id: 2
       },
       {
-        email: 'diego@gmail.com',
+        email: 'alumno3@gmail.com',
         password: '1234567890',
-        role_id: 2
-      }
+        role_id: 3,
+      },
+      {
+        email: 'alumno4@gmail.com',
+        password: '1234567890',
+        role_id: 3
+      },
+
     ])
 
     await UserProfile.createMany([
@@ -201,6 +220,34 @@ export default class extends BaseSeeder {
         image: 'logog.png',
         birthday: '00-00-00'
       },
+      {
+        name: 'Javier',
+        last_name: 'Correa Aguirre',
+        street: 'Ejemplo',
+        number: '1000',
+        suburb: 'Col. Ejemplo',
+        city: 'Torreón',
+        state: 'Coahuila',
+        zip_code: '27777',
+        phone: '8714879687',
+        user_id: 6,
+        image: 'logog.png',
+        birthday: '00-00-00'
+      },
+      {
+        name: 'Luisa',
+        last_name: 'Cordova Martinez',
+        street: 'Ejemplo',
+        number: '1000',
+        suburb: 'Col. Ejemplo',
+        city: 'Torreón',
+        state: 'Coahuila',
+        zip_code: '27777',
+        phone: '8714879687',
+        user_id: 7,
+        image: 'logog.png',
+        birthday: '00-00-00'
+      },
     ])
 
     await Grade.createMany([
@@ -251,6 +298,13 @@ export default class extends BaseSeeder {
       { section_id: 3, grade_id: 7 },
     ])
 
+    await Student.createMany([
+      { user_id: 4, group_id: 1 },
+      { user_id: 5, group_id: 1 },
+      { user_id: 6, group_id: 1 },
+      { user_id: 7, group_id: 1 },
+    ])
+
     await EducationLevel.createMany([
       {
         name: 'Primaria',
@@ -264,6 +318,16 @@ export default class extends BaseSeeder {
         name: 'Bachillerato',
         description: ''
       },
+    ])
+
+    await Lesson.createMany([
+      { name: 'Español I', description: '' },
+      { name: 'Español II', description: '' },
+      { name: 'Español III', description: '' },
+      { name: 'Español IV', description: '' },
+      { name: 'Español V', description: '' },
+      { name: 'Matematicas I', description: '' },
+      { name: 'Matematicas II', description: '' },
     ])
   }
 }

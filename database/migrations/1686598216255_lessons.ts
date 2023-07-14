@@ -8,12 +8,6 @@ export default class extends BaseSchema {
       table.increments('id')
       table.string('name')
       table.text('description')
-      table.integer('educa_level')
-        .unsigned()
-        .references('id')
-        .inTable('education_levels')
-        .onDelete('CASCADE')
-
       table.boolean('active').defaultTo(true)
 
       /**

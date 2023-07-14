@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
-import Lesson from './Lesson'
+import GroupUserLesson from './GroupUserLesson'
 
 export default class EducationLevel extends BaseModel {
   @column({ isPrimary: true })
@@ -21,9 +21,10 @@ export default class EducationLevel extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
 
-  @hasMany(() => Lesson, {
+  @hasMany(() => GroupUserLesson,{
     localKey: 'id',
-    foreignKey: 'educa_level',
+    foreignKey: 'education_level_id',
   })
-  public lesson: HasMany<typeof Lesson>
+  public groupUserLessons: HasMany<typeof GroupUserLesson>
+
 }
