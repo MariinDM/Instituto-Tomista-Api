@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, HasMany, ManyToMany, column, hasMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Question from './Question'
 import TestQuestion from './TestQuestion'
+import Evaluation from './Evaluation'
 
 export default class Test extends BaseModel {
   @column({ isPrimary: true })
@@ -36,4 +37,10 @@ export default class Test extends BaseModel {
     foreignKey: 'test_id',
   })
   public test_questions: HasMany<typeof TestQuestion>
+
+  @hasMany(() => Evaluation, {
+    localKey: 'id',
+    foreignKey: 'test_id',
+  })
+  public evaluations: HasMany<typeof Evaluation>
 }

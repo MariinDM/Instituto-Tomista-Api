@@ -6,6 +6,7 @@ import UserProfile from './UserProfile'
 import ApiToken from './ApiToken'
 import GroupUserLesson from './GroupUserLesson'
 import Student from './Student'
+import Evaluation from './Evaluation'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -68,4 +69,11 @@ export default class User extends BaseModel {
     foreignKey: 'user_id',
   })
   public student: HasOne<typeof Student>
+
+  @hasMany(() => Evaluation, {
+    localKey: 'id',
+    foreignKey: 'user_id',
+  })
+  public evaluations: HasMany<typeof Evaluation>
+  
 }

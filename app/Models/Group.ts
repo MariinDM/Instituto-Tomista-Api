@@ -4,6 +4,7 @@ import Grade from './Grade'
 import Secction from './Secction'
 import GroupUserLesson from './GroupUserLesson'
 import Student from './Student'
+import Evaluation from './Evaluation'
 
 export default class Group extends BaseModel {
   @column({ isPrimary: true })
@@ -43,8 +44,14 @@ export default class Group extends BaseModel {
   public groupUserLessons: HasMany<typeof GroupUserLesson>
 
   @hasMany(() => Student, {
-    localKey: 'group_id',
-    foreignKey: 'id',
+    localKey: 'id',
+    foreignKey: 'group_id',
   })
   public students: HasMany<typeof Student>
+
+  @hasMany(() => Evaluation, {
+    localKey: 'id',
+    foreignKey: 'group_id',
+  })
+  public evaluations: HasMany<typeof Evaluation>
 }

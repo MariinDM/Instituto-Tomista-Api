@@ -37,6 +37,7 @@ Route.group(() => {
   Route.resource('lessons', 'LessonsController.ts')
   Route.resource('questions', 'QuestionsController.ts')
   Route.resource('tests', 'TestsController.ts')
+  Route.resource('evaluations', 'EvaluationsController.ts')
   Route.resource('testQuestions', 'TestQuestionsController.ts')
 
   Route.get('me', 'AuthController.getUserProfile')
