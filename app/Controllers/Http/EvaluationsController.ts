@@ -31,7 +31,7 @@ export default class EvaluationsController {
 
             const user = await User.find(user_id)
 
-            if(user?.role_id != 2) return response.badRequest({message:'El rol no es un Docente'})
+            if (user?.role_id != 2) return response.badRequest({ message: 'El rol no es un Docente' })
 
             await Evaluation.create({ user_id, group_id, test_id, date });
 
@@ -73,11 +73,14 @@ export default class EvaluationsController {
 
         if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
 
-        const evaluation = await Evaluation.findOrFail(params.id)
+        const evaluation = await Evaluation.find(params.id)
+
+        if (!evaluation) return response.badRequest({ message: "Evaluacion no encontrada" })
 
         try {
 
-            const { type } = request.only(['type'])
+            // const { type } = params.type
+            const { type } = request.body()
 
             if (type) {
                 evaluation.active = !evaluation.active
