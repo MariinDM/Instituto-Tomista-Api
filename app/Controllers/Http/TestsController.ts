@@ -4,47 +4,52 @@ import TestValidator from 'App/Validators/TestValidator';
 
 
 export default class TestsController {
-  public async index({auth, response}: HttpContextContract) {
+  public async index({ auth, response }: HttpContextContract) {
     const logged = await auth.user
 
-        if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
 
 
-        const test = await Test.all()
+    const test = await Test.all()
 
-        // console.log(roles.find(n => n.id == 4))
+    // console.log(roles.find(n => n.id == 4))
 
-        return response.ok({ message: 'Ok', test })
+    return response.ok({ message: 'Ok', test })
   }
 
-  public async store({auth, response, request}: HttpContextContract) {
+  public async store({ auth, response, request }: HttpContextContract) {
     const logged = await auth.user
 
-        if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+    if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
 
 
-        try {
-            var vali = await request.validate(TestValidator)
-        } catch (error) {
-            return response.badRequest({ error: error })
-        }
+    try {
+      var vali = await request.validate(TestValidator)
+    } catch (error) {
+      return response.badRequest({ error: error })
+    }
 
-        await Test.create(vali)
+    await Test.create(vali)
 
-        return response.ok({ message: 'Se ha creado un Cuestionario correctamente' })
+    return response.ok({ message: 'Se ha creado un Cuestionario correctamente' })
   }
 
-  public async show({auth, params, response}: HttpContextContract) {
-    const logged = await auth.user
+  public async show({ params, response }: HttpContextContract) {
+    // const logged = await auth.user
 
-        if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
+    // if (logged) return response.status(401).send({ message: "No autorizado" });
 
-        const test = await Test.query().where('id', params.id).orderBy('id', 'desc')
+    const test = await Test.query()
+      .where('id', params.id)
+      .preload('questions', query1 => {
+        query1.where('active', true)
+      })
+      .first()
 
-        return response.ok({ message: 'Ok', test })
+    return response.ok({ message: 'Ok', test })
   }
 
-  public async update({auth, params, response, request}: HttpContextContract) {
+  public async update({ auth, params, response, request }: HttpContextContract) {
     const logged = await auth.user
 
     if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });
@@ -53,20 +58,20 @@ export default class TestsController {
     const question = await Test.findOrFail(params.id)
 
     try {
-        const vali = await request.only(['name', 'description'])
+      const vali = await request.only(['name', 'description'])
 
-        question.merge(vali)
-        await question.save()
+      question.merge(vali)
+      await question.save()
 
-        return response.ok({ message: 'Se ha actualizado el Cuestionario correctamente' })
+      return response.ok({ message: 'Se ha actualizado el Cuestionario correctamente' })
     } catch (error) {
-        console.error(error)
+      console.error(error)
 
-        return response.badRequest({ error: error })
+      return response.badRequest({ error: error })
     }
   }
 
-  public async destroy({auth, response, params}: HttpContextContract) {
+  public async destroy({ auth, response, params }: HttpContextContract) {
     const logged = await auth.user
 
     if (logged && logged.role_id > 1) return response.status(401).send({ message: "No autorizado" });

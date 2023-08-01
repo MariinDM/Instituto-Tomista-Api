@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Evaluation from 'App/Models/Evaluation';
+import Student from 'App/Models/Student';
 import User from 'App/Models/User';
 
 export default class EvaluationsController {
@@ -16,6 +17,7 @@ export default class EvaluationsController {
             })
             .preload('test')
             .preload('user')
+            .orderBy('id', 'desc')
 
         return response.ok({ message: 'Ok', evaluations: evaluations })
     }
@@ -67,7 +69,7 @@ export default class EvaluationsController {
         }
     }
 
-    public async destroy({ auth, params, response, request }: HttpContextContract) {
+    async destroy({ auth, params, response, request }: HttpContextContract) {
 
         const logged = await auth.user
 
@@ -97,5 +99,34 @@ export default class EvaluationsController {
             console.error(error)
             return response.badRequest({ error: error })
         }
+    }
+
+    async showEvaluations({ auth, response }: HttpContextContract) {
+        try {
+            const user = await auth.user;
+            if (!user) return response.status(401).send({ message: "No autorizado" });
+
+            const student = await Student.query()
+                .where('user_id', user.id)
+                .first();
+
+            if (!student) return response.status(404).send({ message: "Estudiante no encontrado" });
+
+            const evaluations = await Evaluation.query()
+                .preload('test')
+                .preload('user', query1 => {
+                    query1.preload('profile')
+                })
+                .where('group_id', student.group_id)
+                .where('public', true)
+                .where('active', true)
+
+            return response.status(200).send({ evaluations });
+
+        } catch (error) {
+            console.log(error);
+            return response.status(500).send({ message: "Error en el servidor" });
+        }
+
     }
 }

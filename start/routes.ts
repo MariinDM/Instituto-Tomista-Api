@@ -40,6 +40,9 @@ Route.group(() => {
   Route.resource('evaluations', 'EvaluationsController.ts')
   Route.resource('testQuestions', 'TestQuestionsController.ts')
 
+  Route.post('show/evaluations','EvaluationsController.showEvaluations')
+  Route.post('show/test/questions/:id','EvaluationsController.showTestQuetions')
+
   Route.get('me', 'AuthController.getUserProfile')
   Route.post('logout', 'AuthController.logout')
   
