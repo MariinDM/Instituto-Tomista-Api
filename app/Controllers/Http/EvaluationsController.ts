@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Answer from 'App/Models/Answer';
 import Evaluation from 'App/Models/Evaluation';
 import Student from 'App/Models/Student';
 import User from 'App/Models/User';
@@ -104,29 +105,39 @@ export default class EvaluationsController {
     async showEvaluations({ auth, response }: HttpContextContract) {
         try {
             const user = await auth.user;
-            if (!user) return response.status(401).send({ message: "No autorizado" });
+            if (!user) {
+                return response.status(401).send({ message: "Usuario no autenticado" });
+            }
 
-            const student = await Student.query()
-                .where('user_id', user.id)
-                .first();
+            const student = await Student.query().where('user_id', user.id).first();
+            if (!student) {
+                return response.status(404).send({ message: "Estudiante no encontrado" });
+            }
 
-            if (!student) return response.status(404).send({ message: "Estudiante no encontrado" });
+            const answers = await Answer.query().where('student_id', student.id);
+
+            const evaluationIds = answers.map(item => item.evaluation_id);
+
+            // console.log(answers,student)
 
             const evaluations = await Evaluation.query()
-                .preload('test')
+                .preload('test', builder => {
+                    builder.preload('questions')
+                })
                 .preload('user', query1 => {
                     query1.preload('profile')
                 })
                 .where('group_id', student.group_id)
                 .where('public', true)
-                .where('active', true)
+                .whereNotIn('id', evaluationIds)
+                .where('active', true);
 
             return response.status(200).send({ evaluations });
-
         } catch (error) {
             console.log(error);
             return response.status(500).send({ message: "Error en el servidor" });
         }
+
 
     }
 }

@@ -39,9 +39,10 @@ Route.group(() => {
   Route.resource('tests', 'TestsController.ts')
   Route.resource('evaluations', 'EvaluationsController.ts')
   Route.resource('testQuestions', 'TestQuestionsController.ts')
+  Route.resource('answers', 'AnswersController.ts')
 
-  Route.post('show/evaluations','EvaluationsController.showEvaluations')
-  Route.post('show/test/questions/:id','EvaluationsController.showTestQuetions')
+  Route.get('show/evaluations','EvaluationsController.showEvaluations')
+  // Route.post('show/test/questions/:id','EvaluationsController.showTestQuetions')
 
   Route.get('me', 'AuthController.getUserProfile')
   Route.post('logout', 'AuthController.logout')

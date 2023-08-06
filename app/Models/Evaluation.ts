@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, HasMany, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Test from './Test'
 import Group from './Group'
+import Answer from './Answer'
 
 export default class Evaluation extends BaseModel {
   @column({ isPrimary: true })
@@ -49,4 +50,10 @@ export default class Evaluation extends BaseModel {
     foreignKey: 'group_id',
   })
   public group: BelongsTo<typeof Group>
+
+  @hasMany(() => Answer,{
+    localKey: 'id',
+    foreignKey: 'evaluation_id',
+  })
+  public answers: HasMany<typeof Answer>
 }
