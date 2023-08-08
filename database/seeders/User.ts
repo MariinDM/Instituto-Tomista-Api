@@ -7,7 +7,6 @@ import Question from 'App/Models/Question'
 import Role from 'App/Models/Role'
 import RoleView from 'App/Models/RoleView'
 import Secction from 'App/Models/Secction'
-import Student from 'App/Models/Student'
 import Test from 'App/Models/Test'
 import TestQuestion from 'App/Models/TestQuestion'
 import User from 'App/Models/User'
@@ -96,12 +95,7 @@ export default class extends BaseSeeder {
         name: 'Evaluaciones',
         route: '/evaluations',
         icon: 'local_library'
-      },
-      {
-        name: 'Respuestas',
-        route: '/answers',
-        icon: 'done_all'
-      },
+      }
 
     ])
 
@@ -118,6 +112,7 @@ export default class extends BaseSeeder {
       { role_id: 1, view_id: 10 },
       { role_id: 1, view_id: 11 },
       { role_id: 1, view_id: 12 },
+      { role_id: 1, view_id: 13 },
       { role_id: 2, view_id: 1 },
       { role_id: 3, view_id: 1 },
     ])
@@ -436,9 +431,7 @@ export default class extends BaseSeeder {
     await Grade.createMany([
       { name: '1' },
       { name: '2' },
-      { name: '3' },
-      { name: '4' },
-      { name: '5' },
+      { name: '3' }
     ])
 
     await Secction.createMany([
@@ -456,16 +449,10 @@ export default class extends BaseSeeder {
       { section_id: 3, grade_id: 2 },
       { section_id: 1, grade_id: 3 },
       { section_id: 2, grade_id: 3 },
-      { section_id: 3, grade_id: 3 },
-      { section_id: 1, grade_id: 4 },
-      { section_id: 2, grade_id: 4 },
-      { section_id: 3, grade_id: 4 },
-      { section_id: 1, grade_id: 5 },
-      { section_id: 2, grade_id: 5 },
-      { section_id: 3, grade_id: 5 },
+      { section_id: 3, grade_id: 3 }
     ])
 
-    
+
 
     await EducationLevel.createMany([
       {
@@ -493,29 +480,29 @@ export default class extends BaseSeeder {
     ])
 
     await Question.createMany([
-      { name: 'El profesor llego a tiempo a la clase'},
-      { name: 'Explico los temas de manera clara'},
-      { name: 'Resolvio tus dudas'},
-      { name: 'Dio una retroalimentacion del tema'},
-      { name: 'Explico las aplicaciones de la teoria'},
-      { name: 'Al inicio del curso te dio la rubrica del curso'},
-      { name: 'Dio calificaciones a tiempo'},
-      { name: 'Dio a los alumnos el conocimiento necesario para el examen'},
+      { name: 'El profesor llego a tiempo a la clase' },
+      { name: 'Explico los temas de manera clara' },
+      { name: 'Resolvio tus dudas' },
+      { name: 'Dio una retroalimentacion del tema' },
+      { name: 'Explico las aplicaciones de la teoria' },
+      { name: 'Al inicio del curso te dio la rubrica del curso' },
+      { name: 'Dio calificaciones a tiempo' },
+      { name: 'Dio a los alumnos el conocimiento necesario para el examen' },
     ])
 
     await Test.createMany([
-      {name: 'Evaluacion Docente'}
+      { name: 'Evaluacion Docente', description: '' }
     ])
 
     await TestQuestion.createMany([
-      {test_id: 1, question_id: 1},
-      {test_id: 1, question_id: 2},
-      {test_id: 1, question_id: 3},
-      {test_id: 1, question_id: 4},
-      {test_id: 1, question_id: 5},
-      {test_id: 1, question_id: 6},
-      {test_id: 1, question_id: 7},
-      {test_id: 1, question_id: 8}
+      { test_id: 1, question_id: 1 },
+      { test_id: 1, question_id: 2 },
+      { test_id: 1, question_id: 3 },
+      { test_id: 1, question_id: 4 },
+      { test_id: 1, question_id: 5 },
+      { test_id: 1, question_id: 6 },
+      { test_id: 1, question_id: 7 },
+      { test_id: 1, question_id: 8 }
     ])
   }
 }
