@@ -129,12 +129,12 @@ export default class extends BaseSeeder {
       {
         email: 'alumno1@gmail.com',
         password: '1234567890',
-        role_id: 2
+        role_id: 3
       },
       {
         email: 'alumno2@gmail.com',
         password: '1234567890',
-        role_id: 2
+        role_id: 3
       },
       {
         email: 'alumno3@gmail.com',
@@ -161,7 +161,7 @@ export default class extends BaseSeeder {
         zip_code: '27777',
         phone: '8714879687',
         user_id: 1,
-        image: 'perfil.png',
+        image: 'docente.png',
         birthday: '00-00-00'
       },
       {
@@ -175,7 +175,7 @@ export default class extends BaseSeeder {
         zip_code: '27777',
         phone: '8714879687',
         user_id: 2,
-        image: 'logog.png',
+        image: 'docente.png',
         birthday: '00-00-00'
       },
       {
@@ -189,7 +189,7 @@ export default class extends BaseSeeder {
         zip_code: '27777',
         phone: '8714879687',
         user_id: 3,
-        image: 'logog.png',
+        image: 'docente.png',
         birthday: '00-00-00'
       },
       {
@@ -203,7 +203,7 @@ export default class extends BaseSeeder {
         zip_code: '27777',
         phone: '8714879687',
         user_id: 4,
-        image: 'logog.png',
+        image: 'alumno.png',
         birthday: '00-00-00'
       },
       {
@@ -217,7 +217,7 @@ export default class extends BaseSeeder {
         zip_code: '27777',
         phone: '8714879687',
         user_id: 5,
-        image: 'logog.png',
+        image: 'alumno.png',
         birthday: '00-00-00'
       },
       {
@@ -231,7 +231,7 @@ export default class extends BaseSeeder {
         zip_code: '27777',
         phone: '8714879687',
         user_id: 6,
-        image: 'logog.png',
+        image: 'alumno.png',
         birthday: '00-00-00'
       },
       {
@@ -245,7 +245,7 @@ export default class extends BaseSeeder {
         zip_code: '27777',
         phone: '8714879687',
         user_id: 7,
-        image: 'logog.png',
+        image: 'alumno.png',
         birthday: '00-00-00'
       },
     ])
@@ -256,22 +256,12 @@ export default class extends BaseSeeder {
       { name: '3' },
       { name: '4' },
       { name: '5' },
-      { name: '6' },
-      { name: '7' },
-      { name: '8' }
     ])
 
     await Secction.createMany([
       { name: 'A' },
       { name: 'B' },
       { name: 'C' },
-      { name: 'D' },
-      { name: 'E' },
-      { name: 'F' },
-      { name: 'G' },
-      { name: 'H' },
-      { name: 'I' },
-      { name: 'J' },
     ])
 
     await Group.createMany([
@@ -290,12 +280,6 @@ export default class extends BaseSeeder {
       { section_id: 1, grade_id: 5 },
       { section_id: 2, grade_id: 5 },
       { section_id: 3, grade_id: 5 },
-      { section_id: 1, grade_id: 6 },
-      { section_id: 2, grade_id: 6 },
-      { section_id: 3, grade_id: 6 },
-      { section_id: 1, grade_id: 7 },
-      { section_id: 2, grade_id: 7 },
-      { section_id: 3, grade_id: 7 },
     ])
 
     await Student.createMany([
