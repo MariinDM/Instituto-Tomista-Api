@@ -3,10 +3,13 @@ import EducationLevel from 'App/Models/EducationLevel'
 import Grade from 'App/Models/Grade'
 import Group from 'App/Models/Group'
 import Lesson from 'App/Models/Lesson'
+import Question from 'App/Models/Question'
 import Role from 'App/Models/Role'
 import RoleView from 'App/Models/RoleView'
 import Secction from 'App/Models/Secction'
 import Student from 'App/Models/Student'
+import Test from 'App/Models/Test'
+import TestQuestion from 'App/Models/TestQuestion'
 import User from 'App/Models/User'
 import UserProfile from 'App/Models/UserProfile'
 import View from 'App/Models/View'
@@ -89,6 +92,16 @@ export default class extends BaseSeeder {
         route: '/tests-questions',
         icon: 'checklist'
       },
+      {
+        name: 'Evaluaciones',
+        route: '/evaluations',
+        icon: 'local_library'
+      },
+      {
+        name: 'Respuestas',
+        route: '/answers',
+        icon: 'done_all'
+      },
 
     ])
 
@@ -106,7 +119,6 @@ export default class extends BaseSeeder {
       { role_id: 1, view_id: 11 },
       { role_id: 1, view_id: 12 },
       { role_id: 2, view_id: 1 },
-      { role_id: 2, view_id: 2 },
       { role_id: 3, view_id: 1 },
     ])
 
@@ -127,6 +139,11 @@ export default class extends BaseSeeder {
         role_id: 2
       },
       {
+        email: 'docente3@gmail.com',
+        password: '1234567890',
+        role_id: 2,
+      },
+      {
         email: 'alumno1@gmail.com',
         password: '1234567890',
         role_id: 3
@@ -143,6 +160,46 @@ export default class extends BaseSeeder {
       },
       {
         email: 'alumno4@gmail.com',
+        password: '1234567890',
+        role_id: 3
+      },
+      {
+        email: 'alumno5@gmail.com',
+        password: '1234567890',
+        role_id: 3
+      },
+      {
+        email: 'alumno6@gmail.com',
+        password: '1234567890',
+        role_id: 3
+      },
+      {
+        email: 'alumno7@gmail.com',
+        password: '1234567890',
+        role_id: 3
+      },
+      {
+        email: 'alumno8@gmail.com',
+        password: '1234567890',
+        role_id: 3
+      },
+      {
+        email: 'alumno9@gmail.com',
+        password: '1234567890',
+        role_id: 3
+      },
+      {
+        email: 'alumno10@gmail.com',
+        password: '1234567890',
+        role_id: 3
+      },
+      {
+        email: 'alumno11@gmail.com',
+        password: '1234567890',
+        role_id: 3
+      },
+      {
+        email: 'alumno12@gmail.com',
         password: '1234567890',
         role_id: 3
       },
@@ -248,6 +305,132 @@ export default class extends BaseSeeder {
         image: 'alumno.png',
         birthday: '00-00-00'
       },
+      {
+        name: 'Angel Miguel',
+        last_name: 'Amenaza Lopez',
+        street: 'Ejemplo',
+        number: '1000',
+        suburb: 'Col. Ejemplo',
+        city: 'Torreón',
+        state: 'Coahuila',
+        zip_code: '27777',
+        phone: '8714879643',
+        user_id: 8,
+        image: 'alumno.png',
+        birthday: '00-00-00'
+      },
+      {
+        name: 'Angel Miguel',
+        last_name: 'Amenaza Lopez',
+        street: 'Ejemplo',
+        number: '1000',
+        suburb: 'Col. Ejemplo',
+        city: 'Torreón',
+        state: 'Coahuila',
+        zip_code: '27777',
+        phone: '8714879643',
+        user_id: 9,
+        image: 'alumno.png',
+        birthday: '00-00-00'
+      },
+      {
+        name: 'Alejandro Jose',
+        last_name: 'Magallanes Pineda',
+        street: 'Ejemplo',
+        number: '1000',
+        suburb: 'Col. Ejemplo',
+        city: 'Torreón',
+        state: 'Coahuila',
+        zip_code: '27777',
+        phone: '8714879643',
+        user_id: 10,
+        image: 'alumno.png',
+        birthday: '00-00-00'
+      },
+      {
+        name: 'Donal',
+        last_name: 'Trump USA',
+        street: 'Ejemplo',
+        number: '1000',
+        suburb: 'Col. Ejemplo',
+        city: 'Torreón',
+        state: 'Coahuila',
+        zip_code: '27777',
+        phone: '8714879643',
+        user_id: 11,
+        image: 'alumno.png',
+        birthday: '00-00-00'
+      },
+      {
+        name: 'Victor',
+        last_name: 'Basurto',
+        street: 'Ejemplo',
+        number: '1000',
+        suburb: 'Col. Ejemplo',
+        city: 'Torreón',
+        state: 'Coahuila',
+        zip_code: '27777',
+        phone: '8714879643',
+        user_id: 12,
+        image: 'alumno.png',
+        birthday: '00-00-00'
+      },
+      {
+        name: 'Ramiro ',
+        last_name: 'Alcala',
+        street: 'Ejemplo',
+        number: '1000',
+        suburb: 'Col. Ejemplo',
+        city: 'Torreón',
+        state: 'Coahuila',
+        zip_code: '27777',
+        phone: '8714879643',
+        user_id: 13,
+        image: 'alumno.png',
+        birthday: '00-00-00'
+      },
+      {
+        name: 'Lionel Andres',
+        last_name: 'Messi',
+        street: 'Ejemplo',
+        number: '1000',
+        suburb: 'Col. Ejemplo',
+        city: 'Torreón',
+        state: 'Coahuila',
+        zip_code: '27777',
+        phone: '8714879643',
+        user_id: 14,
+        image: 'alumno.png',
+        birthday: '00-00-00'
+      },
+      {
+        name: 'Romelu',
+        last_name: 'Lukaku Sanchez',
+        street: 'Ejemplo',
+        number: '1000',
+        suburb: 'Col. Ejemplo',
+        city: 'Torreón',
+        state: 'Coahuila',
+        zip_code: '27777',
+        phone: '8714879643',
+        user_id: 15,
+        image: 'alumno.png',
+        birthday: '00-00-00'
+      },
+      {
+        name: 'Abel',
+        last_name: 'Gutierres Lopez',
+        street: 'Ejemplo',
+        number: '1000',
+        suburb: 'Col. Ejemplo',
+        city: 'Torreón',
+        state: 'Coahuila',
+        zip_code: '27777',
+        phone: '8714879643',
+        user_id: 16,
+        image: 'alumno.png',
+        birthday: '00-00-00'
+      },
     ])
 
     await Grade.createMany([
@@ -282,12 +465,7 @@ export default class extends BaseSeeder {
       { section_id: 3, grade_id: 5 },
     ])
 
-    await Student.createMany([
-      { user_id: 4, group_id: 1 },
-      { user_id: 5, group_id: 1 },
-      { user_id: 6, group_id: 1 },
-      { user_id: 7, group_id: 1 },
-    ])
+    
 
     await EducationLevel.createMany([
       {
@@ -305,13 +483,39 @@ export default class extends BaseSeeder {
     ])
 
     await Lesson.createMany([
-      { name: 'Español I', description: '' },
-      { name: 'Español II', description: '' },
-      { name: 'Español III', description: '' },
-      { name: 'Español IV', description: '' },
+      { name: 'Biologia', description: '' },
+      { name: 'Fisica', description: '' },
+      { name: 'Educacion Fisica', description: '' },
+      { name: 'Geografia', description: '' },
       { name: 'Español V', description: '' },
       { name: 'Matematicas I', description: '' },
-      { name: 'Matematicas II', description: '' },
+      { name: 'Derivadas', description: '' },
+    ])
+
+    await Question.createMany([
+      { name: 'El profesor llego a tiempo a la clase'},
+      { name: 'Explico los temas de manera clara'},
+      { name: 'Resolvio tus dudas'},
+      { name: 'Dio una retroalimentacion del tema'},
+      { name: 'Explico las aplicaciones de la teoria'},
+      { name: 'Al inicio del curso te dio la rubrica del curso'},
+      { name: 'Dio calificaciones a tiempo'},
+      { name: 'Dio a los alumnos el conocimiento necesario para el examen'},
+    ])
+
+    await Test.createMany([
+      {name: 'Evaluacion Docente'}
+    ])
+
+    await TestQuestion.createMany([
+      {test_id: 1, question_id: 1},
+      {test_id: 1, question_id: 2},
+      {test_id: 1, question_id: 3},
+      {test_id: 1, question_id: 4},
+      {test_id: 1, question_id: 5},
+      {test_id: 1, question_id: 6},
+      {test_id: 1, question_id: 7},
+      {test_id: 1, question_id: 8}
     ])
   }
 }
